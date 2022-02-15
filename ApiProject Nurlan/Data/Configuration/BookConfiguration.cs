@@ -18,6 +18,7 @@ namespace ApiProject_Nurlan.Data.Configuration
             builder.Property(c => c.Image).HasMaxLength(100).IsRequired();
             builder.Property(c => c.Language).HasMaxLength(50).IsRequired();
             builder.Property(c => c.PageCount).IsRequired();
+            builder.HasOne(x => x.Genre).WithMany(x => x.Books).OnDelete(DeleteBehavior.Cascade);
             builder.Property(c => c.CostPrice).HasColumnType("decimal(18,2)").IsRequired();
             builder.Property(c => c.SalePrice).HasColumnType("decimal(18,2)").IsRequired();
             builder.Property(c => c.ModifiedAt).HasDefaultValueSql("GETUTCDATE()");

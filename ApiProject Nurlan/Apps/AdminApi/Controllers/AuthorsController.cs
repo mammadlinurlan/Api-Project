@@ -58,6 +58,7 @@ namespace ApiProject_Nurlan.Apps.AdminApi.Controllers
             }
             AuthorGetDto getDto = new AuthorGetDto
             {
+                Id = author.Id,
                 BooksCount = author.Books.Count(),
                 CreatedAt = author.CreatedAt,
                 Image = author.Image,

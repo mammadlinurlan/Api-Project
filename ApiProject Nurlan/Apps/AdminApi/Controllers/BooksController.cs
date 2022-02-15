@@ -36,17 +36,20 @@ namespace ApiProject_Nurlan.Apps.AdminApi.Controllers
             {
                 return StatusCode(409);
             }
-            //if (_context.Authors.FirstOrDefault(x => x.Id == postDto.AuthorId)==null)
-            //{
-            //    return StatusCode(404);
-            //}
+            if (!_context.Genres.Any(x => x.Id == postDto.GenreId))
+            {
+                return StatusCode(404);
+            }
+            if (!_context.Authors.Any(x => x.Id == postDto.AuthorId))
+            {
+                return StatusCode(404);
+            }
+
 
             Book book = new Book
             {
-
-                AuthorId = postDto.AuthorId,
+                AuthorId = postDto.AuthorId ,
                 CostPrice = postDto.CostPrice,
-
                 GenreId = postDto.GenreId,
                 Name = postDto.Name,
                 SalePrice = postDto.SalePrice,
@@ -82,7 +85,6 @@ namespace ApiProject_Nurlan.Apps.AdminApi.Controllers
                 TotalCount = query.Count(),
                 Items = query.Skip((page - 1) * 8).Take(8).Select(x => new BookListItemDto
                 {
-
                     Author = new AuthorInBookListItemDto
                     {
                         Id = x.AuthorId,
@@ -103,10 +105,60 @@ namespace ApiProject_Nurlan.Apps.AdminApi.Controllers
                     PageCount = x.PageCount,
                     Profit = x.SalePrice - x.CostPrice
                 }).ToList()
-
             };
             return Ok(listDto);
+        }
 
+        [HttpPut("{id}")]
+        public IActionResult Update(int id,[FromForm]BookPostDto postDto)
+        {
+            Book book = _context.Books.Include(x => x.Genre).Include(x => x.Author).FirstOrDefault(x => x.Id == id && !x.IsDeleted);
+            if (book == null)
+            {
+                return StatusCode(404);
+            }
+            if (!_context.Genres.Any(x => x.Id == postDto.GenreId))
+            {
+                return StatusCode(404);
+            }
+            if (!_context.Authors.Any(x => x.Id == postDto.AuthorId))
+            {
+                return StatusCode(404);
+            }
+            if (_context.Books.Any(x => x.Id != id && x.Name.ToLower().Trim() == postDto.Name.ToLower().Trim()))
+            {
+                return StatusCode(409);
+            }
+            if (postDto.ImageFile!=null)
+            {
+                Helpers.Helper.DeleteImg(_env.WebRootPath, "assets/book/img", book.Image);
+                book.Image = postDto.ImageFile.SaveImg(_env.WebRootPath, "assets/book/img");
+            }
+
+            book.Name = postDto.Name;
+            book.Language = postDto.Language;
+            book.ModifiedAt = DateTime.UtcNow;
+            book.AuthorId = postDto.AuthorId;
+            book.GenreId = postDto.GenreId;
+            book.CostPrice = postDto.CostPrice;
+            book.SalePrice = postDto.SalePrice;
+            book.PageCount = postDto.PageCount;
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Book book = _context.Books.Include(x => x.Genre).Include(x => x.Author).FirstOrDefault(x => x.Id == id && !x.IsDeleted);
+            if (book == null)
+            {
+                return StatusCode(404);
+            }
+            book.IsDeleted = true;
+            book.DisplayStatus = false;
+            _context.SaveChanges();
+            return NoContent();
         }
     }
 }
