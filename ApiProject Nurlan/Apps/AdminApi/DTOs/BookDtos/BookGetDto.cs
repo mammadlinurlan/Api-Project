@@ -31,13 +31,13 @@ namespace ApiProject_Nurlan.Apps.AdminApi.DTOs.BookDtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int BookCounts { get; set; }
+        public int BooksCount { get; set; }
     }
     public class AuthorInBookGetDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int BookCounts { get; set; }
+        public int BooksCount { get; set; }
     }
 
 }

@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Apps\UserApi\" />
     <Folder Include="wwwroot\assets\author\img\" />
     <Folder Include="wwwroot\assets\book\img\" />
   </ItemGroup>

@@ -67,7 +67,7 @@ namespace ApiProject_Nurlan.Apps.AdminApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            Book book = _context.Books.Include(x => x.Genre).Include(x => x.Author).FirstOrDefault(x => x.Id == id && !x.IsDeleted);
+            Book book = _context.Books.Include(x => x.Genre).ThenInclude(g=>g.Books).Include(x => x.Author).ThenInclude(a=>a.Books).FirstOrDefault(x => x.Id == id && !x.IsDeleted);
             if (book == null)
             {
                 return StatusCode(404);
