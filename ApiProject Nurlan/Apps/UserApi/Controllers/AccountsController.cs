@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace ApiProject_Nurlan.Apps.UserApi.Controllers
 {
+    [ApiExplorerSettings(GroupName = "user_v1")]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
@@ -39,19 +40,19 @@ namespace ApiProject_Nurlan.Apps.UserApi.Controllers
         //[HttpGet("roles")]
         //public async Task<IActionResult> CreateRoles()
         //{
-        //    var result = await _roleManager.CreateAsync(new IdentityRole("Member"));
-        //    result = await _roleManager.CreateAsync(new IdentityRole("Admin"));
-        //    result = await _roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
+        //    //var result = await _roleManager.CreateAsync(new IdentityRole("Member"));
+        //    //result = await _roleManager.CreateAsync(new IdentityRole("Admin"));
+        //    //result = await _roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
 
-        //    //AppUser admin = new AppUser
-        //    //{
-        //    //    FullName = "Super Admin",
-        //    //    UserName = "SuperAdmin",
-        //    //};
+        //    AppUser admin = new AppUser
+        //    {
+        //        FullName = "Super Admin",
+        //        UserName = "SuperAdmin",
+        //    };
 
-        //    //var resultAdmin = await _userManager.CreateAsync(admin, "Admin123");
+        //    var resultAdmin = await _userManager.CreateAsync(admin, "Admin123");
 
-        //    //var resultRole = await _userManager.AddToRoleAsync(admin, "SuperAdmin");
+        //    var resultRole = await _userManager.AddToRoleAsync(admin, "SuperAdmin");
 
         //    return Ok();
         //}

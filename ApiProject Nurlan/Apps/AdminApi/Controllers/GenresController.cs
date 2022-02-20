@@ -1,6 +1,7 @@
 ﻿using ApiProject_Nurlan.Apps.AdminApi.DTOs;
 using ApiProject_Nurlan.Data.DAL;
 using ApiProject_Nurlan.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +13,10 @@ using System.Threading.Tasks;
 
 namespace ApiProject_Nurlan.Apps.AdminApi.Controllers
 {
+    [ApiExplorerSettings(GroupName = "admin_v1")]
     [Route("admin/api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class GenresController : ControllerBase
     {
         private readonly AppDbContext _context;
